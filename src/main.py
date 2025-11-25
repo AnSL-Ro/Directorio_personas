@@ -1,5 +1,5 @@
 import customtkinter as ctk
-from tkinter import messagebox
+import directorio  
 
 ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("dark-blue")
@@ -10,23 +10,34 @@ entrada_numero = None
 etiqueta_estado = None
 
 def agregar_persona():
+    global entrada_nombre, entrada_numero, etiqueta_estado
+    
     nombre = entrada_nombre.get()
     numero = entrada_numero.get()
-    
-    etiqueta_estado.configure(text=f"Persona agregada: {nombre} con número {numero}")
+
+    if nombre and numero: 
+        try:
+            
+            directorio.guardar_contacto(nombre, numero)
+            
+            
+            etiqueta_estado.configure(text=f"Guardado: {nombre}", text_color="green")
+            limpiar_campos()
+        except Exception as e:
+            etiqueta_estado.configure(text=f"Error al guardar: {e}", text_color="red")
+    else:
+        etiqueta_estado.configure(text="Por favor llena ambos campos", text_color="yellow")
 
 def limpiar_campos():
+    global entrada_nombre, entrada_numero
     entrada_nombre.delete(0, ctk.END)
     entrada_numero.delete(0, ctk.END)
-
-
-    
 
 def contruir_interfaz():
     global ventana, entrada_nombre, entrada_numero, etiqueta_estado
 
     ventana = ctk.CTk()
-    ventana.title("Interfaz de Usuario")
+    ventana.title("Directorio de Personas")
     ventana.geometry("400x400")
 
     etiqueta_nombre = ctk.CTkLabel(ventana, text="Nombre:")
@@ -48,13 +59,10 @@ def contruir_interfaz():
     btn_limpiar = ctk.CTkButton(ventana, text="Limpiar campos", command=limpiar_campos)
     btn_limpiar.pack(pady=10)
 
-
 def main():
     global ventana
-
     contruir_interfaz()
     ventana.mainloop()
-    
 
 if __name__ == "__main__":
     main()
