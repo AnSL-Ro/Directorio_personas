@@ -1,5 +1,6 @@
 import customtkinter as ctk
 import directorio  
+from tkinter import messagebox
 
 ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("dark-blue")
@@ -26,7 +27,7 @@ def agregar_persona():
         except Exception as e:
             etiqueta_estado.configure(text=f"Error al guardar: {e}", text_color="red")
     else:
-        etiqueta_estado.configure(text="Por favor llena ambos campos", text_color="yellow")
+        messagebox.showerror("Error", "Por favor, complete todos los campos.")
 
 def limpiar_campos():
     global entrada_nombre, entrada_numero

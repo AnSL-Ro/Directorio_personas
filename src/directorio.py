@@ -26,3 +26,6 @@ def guardar_contacto(nombre, numero):
         escritor = csv.writer(archivo)
         escritor.writerow([nombre, numero])
         print(f"Se guardó en: {RUTA_ARCHIVO}") 
+
+        
+        
